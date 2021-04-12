@@ -18,11 +18,11 @@ class DrumMachineApp extends React.Component {
     constructor(props) {
       super(props)
       this.state = {drum: ''}
-      this.handleClick = this.handleClick.bind(this)
+      //this.handleClick = this.handleClick.bind(this)
     }
-    handleClick(e) {
-      this.setState(console.log("The drum is {drum}"))
-    }
+    // handleClick(e) {
+    //   console.log("Console log {e.target.value}");
+    // }
     render(){
       const drum = this.state.drum
       return(
@@ -32,10 +32,15 @@ class DrumMachineApp extends React.Component {
           <DrumDisplay />
           <div id="row1">
             <DrumPad 
-              id="Tom one"
-              onClick={this.handleClick}/>
-            <DrumPad />
-            <DrumPad />
+              value="Tom one"
+              // onClick={this.handleClick}
+              />
+            <DrumPad 
+              value="Tome two"
+              />
+            <DrumPad
+              value="Tom three" 
+              />
          </div>
           <div id="row2">
             <DrumPad />
@@ -55,33 +60,37 @@ class DrumMachineApp extends React.Component {
   class DrumDisplay extends React.Component {
     constructor(props) {
       super(props)
+      this.state={value: displayPlaceholder}
     }
     render(){
       return(
         <div
           id='display'>
-          <h2>Drum Machine Display</h2>
+          //TODO Update this with drum name on click
+          {this.state.value}
           </div>)
     }
   }
+
+  const displayPlaceholder = <h2>Drum Machine Display</h2>
   
   class DrumPad extends React.Component {
     constructor(props) {
       super(props)
-      //this.props={}
       this.handleClick = this.handleClick.bind(this);
     }
     handleClick(e) {
-      this.props.onClick(e.target.value)
-      //console.log("The {this.props.drum} was hit")
+      console.log("The {this.props.value} was hit")
     }
     render(){
-      const drum=this.props.drum
+      const drum=this.props.value
       return(
       <span
-        drum={drum}
+        value={drum}
         onClick={this.handleClick}
-        class="drum-pad" />)
+        class="drum-pad">
+        {drum}
+        </span>)
     }
   }
   
