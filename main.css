@@ -4,9 +4,11 @@
   }
   
   .drum-pad {
+    background: grey;
+    border: 1px solid black;
     height: 90px;
     width: 90px;
-    border: 2px dashed blue;
+    border-radius: 90px;
   }
   
   #row1 {
@@ -14,12 +16,6 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-  }
-  
-  span.drum-pad {
-    background: grey;
-    border: 1px solid black;
-    border-radius: 100px;
   }
   
   #row2 {
