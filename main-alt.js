@@ -18,10 +18,15 @@ class DrumPadDisplay extends React.Component {
 //Drum
 //! An individual drum component
 class Drum extends React.Component {
+    handleClick() {
+        console.log("The click happened here")
+    }
     render() {
         return(
             <div 
-                class='drum-pad'>
+                class='drum-pad'
+                onClick={this.handleClick.bind(this)}
+                >
             </div>
         )
     }
@@ -32,18 +37,19 @@ class Drum extends React.Component {
 class DrumPad extends React.Component {
     constructor(props) {
         super(props)
-        this.handleChange = this.handleChange.bind(this)
+        this.handleClick = this.handleClick.bind(this)
     }
-    handleChange(e) {
-        this.props.handleChange(e.target.drum)
+    handleClick(e) {
+        console.log("Drum is hit")
+        this.props.handleChange(e.target.value)
     }
     render() {
         return(
             <div>
                 <div id='row1'>
                     <Drum 
-                        drum='Drum 1'
-                        onChange={this.handleChange}/>
+                        value='Drum 1'
+                        onClick={this.handleClick}/>
                     <Drum />
                     <Drum />
                 </div>
@@ -70,8 +76,9 @@ class App extends React.Component {
         this.handleChange = this.handleChange.bind(this)
         this.state = {drum:''}
     }
-    handleChange = (drum) => {
-        this.setState({drum: drum})
+    handleChange = () => {
+        //this.setState({drum: drum})
+        console.log("Drum hit")
     }
     render() {
         return(
@@ -79,12 +86,15 @@ class App extends React.Component {
                 <h1>App Title</h1>
                 <div>
                     <DrumPadDisplay 
-                        text={this.state.drum}/>
+                        text={this.state.drum}
+                        //! This may need an onChange 
+                        />
                 </div>
                 <div>
                     <DrumPad 
                         drum={this.state.drum}
-                        onChange={this.handleChange}/>
+                        onClick={this.handleChange}
+                        />
                 </div>
             </div>
         )
