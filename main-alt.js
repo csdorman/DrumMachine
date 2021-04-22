@@ -1,15 +1,14 @@
 
 
+
 //Drum-pad Display
 //!This is the display component for the Drum-pad
 class DrumPadDisplay extends React.Component {
-    constructor(props) {
-        super(props)
-    }
     render() {
+        const drumHit = this.props.drum
         return(
             <div id='display'>
-                <h2>Drum: {this.props.drum}</h2>
+                <h2>Drum: {drumHit}</h2>
             </div>
         )
     }
@@ -18,14 +17,11 @@ class DrumPadDisplay extends React.Component {
 //Drum
 //! An individual drum component
 class Drum extends React.Component {
-    handleClick() {
-        console.log("The click happened here")
-    }
     render() {
         return(
-            <div 
-                class='drum-pad'
-                onClick={this.handleClick.bind(this)}
+            <div                 
+                key={this.props.pos}
+                className='drum-pad'
                 >
             </div>
         )
@@ -35,65 +31,59 @@ class Drum extends React.Component {
 //Drum-pad component
 //! This should assign the  drum sounds and create layout.
 class DrumPad extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleClick = this.handleClick.bind(this)
-    }
-    handleClick(e) {
-        console.log("Drum is hit")
-        this.props.handleChange(e.target.value)
-    }
     render() {
+        let drumRows = []
+    this.props.drumpad.forEach((drum) => {
+        if (drum.pos < 3) {
+                drumRows.push(
+                    <Drum
+                        id={drum.id}
+                        key={drum.pos}
+                    />
+                )
+            } else if (drum.pos < 6) {
+                drumRows.push(
+                    <Drum 
+                        id={drum.id}
+                        key={drum.pos}
+                    />
+                )
+            } else {
+                drumRows.push(
+                    <Drum
+                        id={drum.id}
+                        key={drum.pos}
+                    />
+                )
+            }
+        })  
         return(
             <div>
-                <div id='row1'>
-                    <Drum 
-                        value='Drum 1'
-                        onClick={this.handleClick}/>
-                    <Drum />
-                    <Drum />
-                </div>
-                <div id='row2'>
-                    <Drum />
-                    <Drum />
-                    <Drum />
-                </div>
-                <div id='row3'>
-                    <Drum />
-                    <Drum />
-                    <Drum />
-                </div>
+                {drumRows}
             </div>
+            
         )
     }
 }
 
+//console.log(DrumPadData)
+//console.log(drumpad)
+//console.log(DRUMSOUNDS)
+
 // Top-level app
 //* This should contain the <DrumPad> and <DrumDisplay> 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.handleChange = this.handleChange.bind(this)
-        this.state = {drum:''}
-    }
-    handleChange = () => {
-        //this.setState({drum: drum})
-        console.log("Drum hit")
-    }
     render() {
         return(
             <div id='drum-machine'>
                 <h1>App Title</h1>
                 <div>
                     <DrumPadDisplay 
-                        text={this.state.drum}
-                        //! This may need an onChange 
                         />
                 </div>
                 <div>
                     <DrumPad 
-                        drum={this.state.drum}
-                        onClick={this.handleChange}
+                        drumpad={this.props.drums}
                         />
                 </div>
             </div>
@@ -101,4 +91,72 @@ class App extends React.Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//Drum sounds/keys
+const DRUMSOUNDS = [
+{
+    pos: 1,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Tom 1',
+    url: '',
+},
+{
+    pos: 2,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Tom 2',
+    url: ''
+},
+{
+    pos: 3,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Tom 3',
+    url: ''
+},
+{
+    pos: 4,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Bass',
+    url: ''
+},
+{
+    pos: 5,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Snare',
+    url: ''
+},
+{
+    pos: 6,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Cymbal',
+    url: ''
+},
+{
+    pos: 7,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Hi hat',
+    url: ''
+},
+{
+    pos: 8,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Cowbell',
+    url: ''
+},
+{
+    pos: 9,
+    keycode: '',
+    keyTrigger: '',
+    id: 'Tambourine',
+    url: ''
+}
+]
+
+// Render app and define drum object
+ReactDOM.render(<App drums={DRUMSOUNDS} />, document.getElementById('root'));
